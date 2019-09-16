@@ -1,6 +1,7 @@
 package kr.co.itcen.mysite.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +15,16 @@ import kr.co.itcen.mysite.web.WebUtils;
 public class GuestbookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		
+
 		String action = request.getParameter("a");
-		if ("add".equals(action)) {
+		if ("list".equals(action)) {
+			List<GuestbookVo> list = new GuestbookDao().getList();
+			request.setAttribute("list", list);
+			WebUtils.forward(request, response, "/WEB-INF/views/guestbook/list.jsp");
+		} else if ("add".equals(action)) {
 			String name = request.getParameter("name");
 			String password = request.getParameter("password");
 			String contents = request.getParameter("contents");
@@ -30,26 +36,27 @@ public class GuestbookServlet extends HttpServlet {
 
 			new GuestbookDao().insert(guesetVo);
 
-			WebUtils.redirect(request, response, request.getContextPath() + "/guestbook/");
+			WebUtils.redirect(request, response, request.getContextPath() + "/guestbook?a=list");
 		} else if ("deleteform".equals(action)) {
 			WebUtils.forward(request, response, "/WEB-INF/views/guestbook/deleteform.jsp");
 		} else if ("delete".equals(action)) {
 			String no = request.getParameter("no");
 			String password = request.getParameter("password");
-			
+
 			GuestbookVo guestVo = new GuestbookVo();
 			guestVo.setNo(Long.parseLong(no));
 			guestVo.setPassword(password);
-			
+
 			new GuestbookDao().delete(guestVo);
-			
-			WebUtils.redirect(request, response, request.getContextPath() + "/guestbook");
+
+			WebUtils.redirect(request, response, request.getContextPath() + "/guestbook?a=list");
 		} else {
 			WebUtils.forward(request, response, "/WEB-INF/views/guestbook/list.jsp");
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

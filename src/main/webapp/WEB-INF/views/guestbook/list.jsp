@@ -4,7 +4,7 @@
 <%@ page import="kr.co.itcen.mysite.vo.GuestbookVo" %>
 <%@ page import="java.util.List" %>
 <%
-	List<GuestbookVo> list = new GuestbookDao().getList();
+	List<GuestbookVo> list = (List<GuestbookVo>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
