@@ -30,7 +30,7 @@ public class GuestbookServlet extends HttpServlet {
 
 			new GuestbookDao().insert(guesetVo);
 
-			WebUtils.forward(request, response, "/WEB-INF/views/guestbook/list.jsp");
+			WebUtils.redirect(request, response, request.getContextPath() + "/guestbook/");
 		} else if ("deleteform".equals(action)) {
 			WebUtils.forward(request, response, "/WEB-INF/views/guestbook/deleteform.jsp");
 		} else if ("delete".equals(action)) {
@@ -43,7 +43,7 @@ public class GuestbookServlet extends HttpServlet {
 			
 			new GuestbookDao().delete(guestVo);
 			
-			WebUtils.forward(request, response, "/WEB-INF/views/guestbook/list.jsp");
+			WebUtils.redirect(request, response, request.getContextPath() + "/guestbook");
 		} else {
 			WebUtils.forward(request, response, "/WEB-INF/views/guestbook/list.jsp");
 		}
