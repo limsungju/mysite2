@@ -26,19 +26,21 @@ public class UpdateAction implements Action {
 			return;
 		}
 
-		UserVo updateUser = (UserVo) session.getAttribute("updateUser");
+		UserVo updateUser = (UserVo) session.getAttribute("authUser");
 		System.out.println(updateUser);
 		if (updateUser == null) {
 			WebUtils.redirect(request, response, request.getContextPath());
 			return;
 		}
+		UserVo vo=new UserDao().get(updateUser.getNo());
+		
 		UserVo userVo = new UserVo();
-		userVo.setNo(updateUser.getNo());
+		userVo.setNo(vo.getNo());
 		userVo.setName(name);
 		userVo.setGender(gender);
 		
 		if("".equals(password)) {
-			userVo.setPassword(updateUser.getPassword());
+			userVo.setPassword(vo.getPassword());
 		}else {
 			userVo.setPassword(password);
 		}

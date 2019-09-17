@@ -41,7 +41,7 @@ public class UpdateFormAction implements Action {
 			return; // 코드를 안끊어주면 제어권은 jsp에게 넘어가지만 코드가 실행되기 때문에 exception이 날 수도 있기 때문에 꼭 끊어주어야 한다.
 		}
 
-		session.setAttribute("updateUser", userVo); // 인증할 name, 넣어줄 객체
+		request.setAttribute("userVo", userVo); // 인증할 name, 넣어줄 객체
 
 		WebUtils.forward(request, response, "/WEB-INF/views/user/updateform.jsp");
 	}
