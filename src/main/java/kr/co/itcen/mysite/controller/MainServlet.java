@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.itcen.mysite.web.WebUtils;
+import kr.co.itcen.web.WebUtils;
 
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

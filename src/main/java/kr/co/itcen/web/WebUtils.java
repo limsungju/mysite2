@@ -1,4 +1,4 @@
-package kr.co.itcen.mysite.web;
+package kr.co.itcen.web;
 
 import java.io.IOException;
 
