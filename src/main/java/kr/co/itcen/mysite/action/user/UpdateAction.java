@@ -32,7 +32,7 @@ public class UpdateAction implements Action {
 			WebUtils.redirect(request, response, request.getContextPath());
 			return;
 		}
-		UserVo vo=new UserDao().get(updateUser.getNo());
+		UserVo vo = new UserDao().get(updateUser.getNo());
 		
 		UserVo userVo = new UserVo();
 		userVo.setNo(vo.getNo());
