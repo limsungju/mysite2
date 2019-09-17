@@ -29,7 +29,6 @@ public class UserDao {
 			pstmt.setString(2, userVo.getEmail());
 			pstmt.setString(3, userVo.getPassword());
 			pstmt.setString(4, userVo.getGender());
-			pstmt.setString(5, userVo.getJoinDate());
 			
 			int count = pstmt.executeUpdate();
 			
@@ -53,6 +52,57 @@ public class UserDao {
 				}
 				if(stmt != null) {
 					stmt.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public UserVo get(Long no) {
+		return null;
+	}
+	
+	public UserVo get(String email, String password) {
+		UserVo result = null;
+		
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			connection = getConnection();
+			
+			String sql = "select no, name from user where email = ? and password = ?";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, password);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				Long no = rs.getLong(1);
+				String name = rs.getString(2);
+				
+				result = new UserVo();
+				result.setNo(no);
+				result.setName(name);
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
 				}
 				if(pstmt != null) {
 					pstmt.close();
