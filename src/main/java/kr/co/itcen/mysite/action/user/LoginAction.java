@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.itcen.mysite.dao.UserDao;
 import kr.co.itcen.mysite.vo.UserVo;
@@ -27,9 +28,10 @@ public class LoginAction implements Action {
 		}
 		
 		// 인증처리 (Session 처리)
-		//
-		//
+		HttpSession session = request.getSession(true); // false를 넣어주면 없으면 null을 리턴, true를 넣어주면 없으면 만들어서 보내준다.
+		session.setAttribute("authUser", userVo); // 인증할 name, 넣어줄 객체
 		
+		WebUtils.redirect(request, response, request.getContextPath()); // main으로 돌리기
 		
 	}
 
