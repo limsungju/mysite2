@@ -9,10 +9,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 public class EncodingFilter implements Filter {
-
+	private String encoding;
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// request 처리
-		request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding(encoding);
 		
 		
 		chain.doFilter(request, response);
@@ -24,7 +24,12 @@ public class EncodingFilter implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig fConfig) throws ServletException {}
+	public void init(FilterConfig fConfig) throws ServletException {
+		encoding = fConfig.getInitParameter("encoding"); // web.xml -> <param-name>encoding</param-name>
+		if(encoding == null) { // web.xml -> <init-param><param-name>encoding</param-name><param-value>utf-8</param-value></init-param> 이 빠져 있을때 default 설정
+			encoding = "utf-8";
+		}
+	}
 	
 	@Override
 	public void destroy() {}
