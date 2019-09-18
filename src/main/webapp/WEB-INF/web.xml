@@ -39,4 +39,13 @@
     <servlet-name>GuestbookServlet</servlet-name>
     <url-pattern>/guestbook</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>EncodingFilter</display-name>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>kr.co.itcen.web.filter.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern><!-- filter는 모든 경로를 받아주기 때문에 /*로 설정한다. -->
+  </filter-mapping>
 </web-app>
