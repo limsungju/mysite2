@@ -6,12 +6,8 @@
     
 <div id="navigation">
 	<ul>
-		<c:choose>
-			<c:when test="${empty authUser }">
-				<li><a href="${pageContext.servletContext.contextPath }">임성주</a></li>
-				<li><a href="${pageContext.servletContext.contextPath }/guestbook?a=list">방명록</a></li>
-				<li><a href="${pageContext.servletContext.contextPath }/board">게시판</a></li>
-		    </c:when>
-	    </c:choose>
+		<li><a href="${pageContext.servletContext.contextPath }">임성주</a></li>
+		<li><a href="${pageContext.servletContext.contextPath }/guestbook?a=list">방명록</a></li>
+		<li><a href="${pageContext.servletContext.contextPath }/board">게시판</a></li>
 	</ul>
 </div>
