@@ -25,8 +25,8 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "insert into board(no, title, contents, hit, reg_date, g_no, o_no, depth, user_no)" +
-					 "    values(null, ?, ?, 0, now(), (select ifnull(max(b.g_no)+1,1) from board b), 1, 0, ?)";
+			String sql = "insert into board(no, title, contents, hit, reg_date, g_no, o_no, depth, user_no, status)" +
+					 "    values(null, ?, ?, 0, now(), (select ifnull(max(b.g_no)+1,1) from board b), 1, 0, ?, 'i')";
 			pstmt = connection.prepareStatement(sql);
 			pstmt.setString(1, boardVo.getTitle());
 			pstmt.setString(2, boardVo.getContents());
@@ -106,37 +106,37 @@ public class BoardDao {
 		}
 		return result;
 	}
-//
-//	public void delete(BoardVo boardVo) {
-//		Connection connection = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//			connection = getConnection();
-//
-//			String sql = "delete from guestbook where no=? and password=?";
-//
-//			pstmt = connection.prepareStatement(sql);
-//			pstmt.setLong(1, boardVo.getNo());
-//			pstmt.setString(2, boardVo.getPassword());
-//
-//			pstmt.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		} finally {
-//			try {
-//				if (pstmt != null) {
-//					pstmt.close();
-//				}
-//				if (connection != null) {
-//					connection.close();
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+
+	public void delete(BoardVo boardVo) {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			connection = getConnection();
+
+			String sql = "update board set state = 'd'";
+
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setLong(1, boardVo.getNo());
+			pstmt.setString(2, boardVo.getPassword());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public BoardVo getList(Long no) {
 		BoardVo result = null;

@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp"/>
+		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board" class="board-form">
 				<table class="tbl-ex">
@@ -37,7 +37,9 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.servletContext.contextPath }/board?a=list">글목록</a>
-					<a href="${pageContext.servletContext.contextPath }/board?a=modifyform&no=${boardVo.no }">글수정</a>
+					<c:if test="${authUser.no eq boardVo.uNo }">
+						<a href="${pageContext.servletContext.contextPath }/board?a=modifyform&no=${boardVo.no }">글수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

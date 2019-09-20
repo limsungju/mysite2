@@ -15,7 +15,10 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board?a=modify&uno=${boardVo.uNo }&no=${boardVo.no }">
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board">
+					<input type="hidden" name="a" value="modify">
+					<input type='hidden' name="uno" value="${boardVo.uNo }">
+					<input type='hidden' name="no" value="${boardVo.no }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>

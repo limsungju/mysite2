@@ -36,7 +36,7 @@
                   <td>${boardVo.uName }</td>
                   <td>${boardVo.hit }</td>
                   <td>${boardVo.regDate }</td>
-                  <td><a href="" class="del">삭제</a></td>
+                  <td><a href="${pageContext.servletContext.contextPath }/board?a=deleteform&no=${boardVo.no }" class="del">삭제</a></td>
                </tr>
             </c:forEach>
             </table>

@@ -9,8 +9,10 @@ public class BoardVo {
 	private Integer gNo;
 	private Integer oNo;
 	private Integer depth;
+	private String status;
 	private Long uNo;
 	private String uName;
+	private String password;
 
 	public Long getNo() {
 		return no;
@@ -76,6 +78,14 @@ public class BoardVo {
 		this.depth = depth;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Long getuNo() {
 		return uNo;
 	}
@@ -92,11 +102,19 @@ public class BoardVo {
 		this.uName = uName;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
-				+ regDate + ", gNo=" + gNo + ", oNo=" + oNo + ", depth=" + depth + ", uNo=" + uNo + ", uName=" + uName
-				+ "]";
+				+ regDate + ", gNo=" + gNo + ", oNo=" + oNo + ", depth=" + depth + ", status=" + status + ", uNo=" + uNo
+				+ ", uName=" + uName + ", password=" + password + "]";
 	}
 
 }
