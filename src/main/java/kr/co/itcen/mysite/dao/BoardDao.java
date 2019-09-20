@@ -67,46 +67,45 @@ public class BoardDao {
 		return result;
 	}
 
-//	public Boolean update(BoardVo boardVo) {
-//		Boolean result = false;
-//
-//		Connection connection = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//
-//		try {
-//			connection = getConnection();
-//
-//			String sql = "update user set name = ?, password = ?, gender = ? where no = ?";
-//			pstmt = connection.prepareStatement(sql);
-//			pstmt.setString(1, boardVo.getName());
-//			pstmt.setString(2, boardVo.getPassword());
-//			pstmt.setString(3, boardVo.getGender());
-//			pstmt.setLong(4, boardVo.getNo());
-//
-//			int count = pstmt.executeUpdate();
-//
-//			result = (count == 1);
-//
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		} finally {
-//			try {
-//				if (rs != null) {
-//					rs.close();
-//				}
-//				if (pstmt != null) {
-//					pstmt.close();
-//				}
-//				if (connection != null) {
-//					connection.close();
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return result;
-//	}
+	public Boolean update(BoardVo boardVo) {
+		Boolean result = false;
+
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			connection = getConnection();
+
+			String sql = "update board  set title = ?, contents = ? where no = ?";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1, boardVo.getTitle());
+			pstmt.setString(2, boardVo.getContents());
+			pstmt.setLong(3, boardVo.getNo());
+
+			int count = pstmt.executeUpdate();
+
+			result = (count == 1);
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 //
 //	public void delete(BoardVo boardVo) {
 //		Connection connection = null;
@@ -148,7 +147,7 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select u.no as uno, b.no as no, b.title, b.contents" +
+			String sql = "select b.user_no as uno, b.no as no, b.title, b.contents" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
 			        "        and b.no = ?";
@@ -160,10 +159,15 @@ public class BoardDao {
 			if(rs.next()) {
 				result = new BoardVo();
 				
-				result.setTitle(rs.getString("title"));
-				result.setContents(rs.getString("contents"));
-				result.setuNo(rs.getLong("no"));
+				result.setuNo(rs.getLong("uno"));
+				System.out.println(rs.getLong("uno"));
 				result.setNo(rs.getLong("no"));
+				System.out.println(rs.getLong("no"));
+				result.setTitle(rs.getString("title"));
+				System.out.println(rs.getString("title"));
+				result.setContents(rs.getString("contents"));
+				System.out.println(rs.getString("contents"));
+				
 				
 			}
 						
@@ -249,6 +253,8 @@ public class BoardDao {
 		}
 		return connection;
 	}
+
+	
 
 	
 
