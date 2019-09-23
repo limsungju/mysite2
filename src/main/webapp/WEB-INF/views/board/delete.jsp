@@ -20,8 +20,8 @@
 					<input type="hidden" name="a" value="delete">
 					<input type='hidden' name="no" value="${boardVo.no }">
 					<input type='hidden' name="uno" value="${boardVo.uNo }">
-					<label>비밀번호</label>
-					<input type="password" name="password">
+					<label>게시글을 지우시려면 <p>삭제하기</p>를 입력해주세요</label> <br>
+					<input type="text" name="text" value="">
 					<input type="submit" value="확인">
 				</form>
 				<a href="${pageContext.servletContext.contextPath }/board?a=list">게시판 리스트</a>

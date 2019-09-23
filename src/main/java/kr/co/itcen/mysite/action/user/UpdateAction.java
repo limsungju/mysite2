@@ -46,7 +46,7 @@ public class UpdateAction implements Action {
 		}
 		new UserDao().update(userVo);
 		
-		session.setAttribute("authUser", userVo);
+		request.setAttribute("authUser", userVo);
 		WebUtils.redirect(request, response, request.getContextPath()); // main으로 돌리기
 		
 	}

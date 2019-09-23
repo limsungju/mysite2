@@ -19,6 +19,7 @@ public class ListAction implements Action {
 		// 페이징, 리스트 등등 알고리즘 추가
 		List<BoardVo> list = new BoardDao().getList();
 		request.setAttribute("list", list);
+		
 		WebUtils.forward(request, response, "/WEB-INF/views/board/list.jsp");
 	}
 

@@ -33,8 +33,6 @@ public class DeleteFormAction implements Action {
 			return;
 		}
 		
-		
-		
 		System.out.println(no);
 		BoardVo boardVo = new BoardDao().getList(no);
 		request.setAttribute("boardVo", boardVo);

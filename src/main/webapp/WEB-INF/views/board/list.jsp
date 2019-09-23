@@ -32,11 +32,11 @@
 			<c:forEach items='${list }' var='boardVo' varStatus='status'>
                <tr>
                   <td>${count - status.index }</td>
-                  <td><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${boardVo.no }">${boardVo.title }</a></td>
+                  <td style ='padding-left:${50*boardVo.depth}px'><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${boardVo.no }">${boardVo.title }</a></td>
                   <td>${boardVo.uName }</td>
                   <td>${boardVo.hit }</td>
                   <td>${boardVo.regDate }</td>
-                  <td><a href="${pageContext.servletContext.contextPath }/board?a=deleteform&no=${boardVo.no }" class="del">삭제</a></td>
+                  	<td><a href="${pageContext.servletContext.contextPath }/board?a=deleteform&no=${boardVo.no }" class="del">삭제</a></td>
                </tr>
             </c:forEach>
             </table>

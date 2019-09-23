@@ -114,11 +114,15 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 
-			String sql = "update board set state = 'd'";
+			String sql = "update board b inner join user u" +
+				    "         on u.no = b.user_no" +
+				    "        set b.status = 'd', b.title = '삭제된 글입니다.'" +
+				    "      where b.no = ?" +
+				    "        and u.no = ?";
 
 			pstmt = connection.prepareStatement(sql);
 			pstmt.setLong(1, boardVo.getNo());
-			pstmt.setString(2, boardVo.getPassword());
+			pstmt.setLong(2, boardVo.getuNo());
 
 			pstmt.executeUpdate();
 
