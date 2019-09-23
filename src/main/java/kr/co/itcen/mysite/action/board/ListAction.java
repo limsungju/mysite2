@@ -17,8 +17,26 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 페이징, 리스트 등등 알고리즘 추가
-		List<BoardVo> list = new BoardDao().getList();
-		request.setAttribute("list", list);
+		
+		String search = request.getParameter("search");
+		String kwd = request.getParameter("kwd");
+		
+		if("allsearch".equals(search)) {
+			List<BoardVo> list = new BoardDao().getAllList(kwd);
+			request.setAttribute("list", list);
+		} else if ("titlesearch".equals(search)) {
+			List<BoardVo> list = new BoardDao().getTitleList(kwd);
+			request.setAttribute("list", list);
+		} else if ("namesearch".equals(search)) {
+			List<BoardVo> list = new BoardDao().getNameList(kwd);
+			request.setAttribute("list", list);
+		} else {
+			List<BoardVo> list = new BoardDao().getList();
+			request.setAttribute("list", list);
+		}
+		
+		
+		
 		
 		WebUtils.forward(request, response, "/WEB-INF/views/board/list.jsp");
 	}

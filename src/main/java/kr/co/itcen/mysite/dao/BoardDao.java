@@ -351,6 +351,171 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 게시글 글쓴이+제목 검색
+	public List<BoardVo> getAllList(String kwd) {
+		List<BoardVo> result = new ArrayList<BoardVo>();
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			connection = getConnection();
+			
+			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
+			        "       from user u, board b" +
+					"      where u.no = b.user_no" +
+			        "        and u.name like ?" +
+					"         or b.title like ?" +
+			        "   order by g_no desc, o_no asc";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+			pstmt.setString(2, "%"+kwd+"%");
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVo boardVo = new BoardVo();
+				
+				boardVo.setNo(rs.getLong("no"));
+				boardVo.setTitle(rs.getString("title"));
+				boardVo.setuName(rs.getString("name"));
+				boardVo.setContents(rs.getString("contents"));
+				boardVo.setHit(rs.getInt("hit"));
+				boardVo.setRegDate(rs.getString("reg_date"));
+				boardVo.setDepth(rs.getInt("depth"));
+				
+				result.add(boardVo);
+			}
+						
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	// 게시글 제목 검색
+	public List<BoardVo> getTitleList(String kwd) {
+		List<BoardVo> result = new ArrayList<BoardVo>();
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			connection = getConnection();
+			
+			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
+			        "       from user u, board b" +
+					"      where u.no = b.user_no" +
+					"        and b.title like ?" +
+			        "   order by g_no desc, o_no asc";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVo boardVo = new BoardVo();
+				
+				boardVo.setNo(rs.getLong("no"));
+				boardVo.setTitle(rs.getString("title"));
+				boardVo.setuName(rs.getString("name"));
+				boardVo.setContents(rs.getString("contents"));
+				boardVo.setHit(rs.getInt("hit"));
+				boardVo.setRegDate(rs.getString("reg_date"));
+				boardVo.setDepth(rs.getInt("depth"));
+				
+				result.add(boardVo);
+			}
+						
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+		
+	// 게시글 글쓴이 검색
+	public List<BoardVo> getNameList(String kwd) {
+		List<BoardVo> result = new ArrayList<BoardVo>();
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			connection = getConnection();
+			
+			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
+			        "       from user u, board b" +
+					"      where u.no = b.user_no" +
+					"        and u.name like ?" +
+			        "   order by g_no desc, o_no asc";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1, "%"+kwd+"%");
+			
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVo boardVo = new BoardVo();
+				
+				boardVo.setNo(rs.getLong("no"));
+				boardVo.setTitle(rs.getString("title"));
+				boardVo.setuName(rs.getString("name"));
+				boardVo.setContents(rs.getString("contents"));
+				boardVo.setHit(rs.getInt("hit"));
+				boardVo.setRegDate(rs.getString("reg_date"));
+				boardVo.setDepth(rs.getInt("depth"));
+				
+				result.add(boardVo);
+			}
+						
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	// 게시글에 대한 g_no, o_no, depth 출력
 	public BoardVo select(Long no) {
 		BoardVo result = null;

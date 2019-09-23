@@ -14,8 +14,13 @@
       <jsp:include page="/WEB-INF/views/includes/header.jsp"/>
       <div id="content">
          <div id="board">
-            <form id="search_form" action="" method="post">
-               <input type="text" id="kwd" name="kwd" value="">
+            <form id="search_form" action="${pageContext.servletContext.contextPath }/board?a=list" method="post">
+            <select name='search'>
+				<option value='allsearch'>제목+글쓴이</option>
+				<option value='titlesearch'>제목</option>
+				<option value='namesearch'>글쓴이</option>
+			</select>
+				<input type="text" id="kwd" name="kwd" value="">
                <input type="submit" value="찾기">
             </form>
             
