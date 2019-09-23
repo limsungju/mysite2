@@ -18,7 +18,9 @@ public class ViewAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long no = Long.parseLong(request.getParameter("no"));
-
+		
+		new BoardDao().update(no);
+		
 		BoardVo boardVo = new BoardDao().getList(no);
 		request.setAttribute("boardVo", boardVo);
 

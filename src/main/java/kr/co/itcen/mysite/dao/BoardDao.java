@@ -209,6 +209,45 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 조회수 증가
+	public Boolean update(Long no) {
+		Boolean result = false;
+
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			connection = getConnection();
+
+			String sql = "update board  set hit = hit+1 where no = ?";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setLong(1, no);
+
+			int count = pstmt.executeUpdate();
+
+			result = (count == 1);
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	// 게시글 삭제
 	public void delete(BoardVo boardVo) {
 		Connection connection = null;
