@@ -41,7 +41,14 @@
                   <c:if test="${boardVo.depth >= 1 }">
                   	<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/>
                   </c:if>
-                  <a href="${pageContext.servletContext.contextPath }/board?a=view&no=${boardVo.no }">${boardVo.title }</a>
+                  <c:choose>
+	                  <c:when test="${boardVo.status eq 'd' }">
+	                  	${boardVo.title }
+	                  </c:when>
+	                  <c:otherwise>
+	                  	<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${boardVo.no }">${boardVo.title }</a>
+	                  </c:otherwise>
+                  </c:choose>
                   </td>
                   <td>${boardVo.uName }</td>
                   <td>${boardVo.hit }</td>

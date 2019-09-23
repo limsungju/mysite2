@@ -348,7 +348,7 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
+			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
 			        "   order by g_no desc, o_no asc";
@@ -366,6 +366,7 @@ public class BoardDao {
 				boardVo.setHit(rs.getInt("hit"));
 				boardVo.setRegDate(rs.getString("reg_date"));
 				boardVo.setDepth(rs.getInt("depth"));
+				boardVo.setStatus(rs.getString("status"));
 				
 				result.add(boardVo);
 			}
@@ -400,7 +401,7 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
+			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
 			        "        and (u.name like ?" +
@@ -422,6 +423,7 @@ public class BoardDao {
 				boardVo.setHit(rs.getInt("hit"));
 				boardVo.setRegDate(rs.getString("reg_date"));
 				boardVo.setDepth(rs.getInt("depth"));
+				boardVo.setStatus(rs.getString("status"));
 				
 				result.add(boardVo);
 			}
@@ -456,7 +458,7 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
+			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
 					"        and b.title like ?" +
@@ -476,6 +478,7 @@ public class BoardDao {
 				boardVo.setHit(rs.getInt("hit"));
 				boardVo.setRegDate(rs.getString("reg_date"));
 				boardVo.setDepth(rs.getInt("depth"));
+				boardVo.setStatus(rs.getString("status"));
 				
 				result.add(boardVo);
 			}
@@ -510,7 +513,7 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
+			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
 					"        and u.name like ?" +
@@ -531,6 +534,7 @@ public class BoardDao {
 				boardVo.setHit(rs.getInt("hit"));
 				boardVo.setRegDate(rs.getString("reg_date"));
 				boardVo.setDepth(rs.getInt("depth"));
+				boardVo.setStatus(rs.getString("status"));
 				
 				result.add(boardVo);
 			}
