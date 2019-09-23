@@ -39,9 +39,9 @@ public class WriteFormAction implements Action {
 			WebUtils.forward(request, response, "/WEB-INF/views/user/loginform.jsp");
 			return; // 코드를 안끊어주면 제어권은 jsp에게 넘어가지만 코드가 실행되기 때문에 exception이 날 수도 있기 때문에 꼭 끊어주어야 한다.
 		}
-
+		
 		request.setAttribute("userVo", userVo); // 인증할 name, 넣어줄 객체
-
+		request.setAttribute("no", request.getParameter("no"));
 		WebUtils.forward(request, response, "/WEB-INF/views/board/write.jsp");
 
 	}

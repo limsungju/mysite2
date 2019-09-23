@@ -36,10 +36,12 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board?a=list">글목록</a>
 					<c:if test="${authUser.no eq boardVo.uNo }">
 						<a href="${pageContext.servletContext.contextPath }/board?a=modifyform&no=${boardVo.no }">글수정</a>
 					</c:if>
+					<a href="${pageContext.servletContext.contextPath }/board?a=list">글목록</a>
+					<a href="${pageContext.servletContext.contextPath }/board?a=writeform&no=${boardVo.no }">답글달기</a>
+					
 				</div>
 			</div>
 		</div>
