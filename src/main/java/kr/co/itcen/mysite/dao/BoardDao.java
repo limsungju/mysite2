@@ -12,6 +12,7 @@ import java.util.List;
 import kr.co.itcen.mysite.vo.BoardVo;
 
 public class BoardDao {
+	// 게시글 작성
 	public Boolean insert(BoardVo boardVo) {
 		Boolean result = false;
 
@@ -69,6 +70,7 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 게시글에 답글달기
 	public Boolean insertBoard(BoardVo boardVo) {
 		Boolean result = false;
 
@@ -126,6 +128,7 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 게시글 답글달기
 	public Boolean update(Integer gNo, Integer oNo) {
 		Boolean result = false;
 
@@ -164,7 +167,8 @@ public class BoardDao {
 		}
 		return result;
 	}
-
+	
+	// 게시글 수정
 	public Boolean update(BoardVo boardVo) {
 		Boolean result = false;
 
@@ -204,7 +208,8 @@ public class BoardDao {
 		}
 		return result;
 	}
-
+	
+	// 게시글 삭제
 	public void delete(BoardVo boardVo) {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -240,6 +245,7 @@ public class BoardDao {
 		}
 	}
 	
+	// 게시글 번호에 대한 정보 출력
 	public BoardVo getList(Long no) {
 		BoardVo result = null;
 		Connection connection = null;
@@ -293,6 +299,7 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 게시글 리스트
 	public List<BoardVo> getList() {
 		List<BoardVo> result = new ArrayList<BoardVo>();
 		Connection connection = null;
@@ -344,6 +351,7 @@ public class BoardDao {
 		return result;
 	}
 	
+	// 게시글에 대한 g_no, o_no, depth 출력
 	public BoardVo select(Long no) {
 		BoardVo result = null;
 		Connection connection = null;
@@ -402,13 +410,5 @@ public class BoardDao {
 		}
 		return connection;
 	}
-
-	
-
-	
-
-	
-
-	
 
 }
