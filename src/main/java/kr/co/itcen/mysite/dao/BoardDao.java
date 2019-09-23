@@ -364,8 +364,8 @@ public class BoardDao {
 			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
-			        "        and u.name like ?" +
-					"         or b.title like ?" +
+			        "        and (u.name like ?" +
+					"         or b.title like ?)" +
 			        "   order by g_no desc, o_no asc";
 			pstmt = connection.prepareStatement(sql);
 			pstmt.setString(1, "%"+kwd+"%");
