@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.itcen.mysite.vo.BoardVo;
+import kr.co.itcen.web.PaginationUtil;
 
 public class BoardDao {
 	// 게시글 작성
@@ -339,7 +340,7 @@ public class BoardDao {
 	}
 	
 	// 게시글 리스트
-	public List<BoardVo> getList() {
+	public List<BoardVo> getList(String kwd, PaginationUtil pagination) {
 		List<BoardVo> result = new ArrayList<BoardVo>();
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -351,8 +352,16 @@ public class BoardDao {
 			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
-			        "   order by g_no desc, o_no asc";
+			        "        and (b.title like ? or b.contents like ?)" +
+			        "   order by g_no desc, o_no asc" +
+			        "      limit ?, ?";
 			pstmt = connection.prepareStatement(sql);
+			pstmt.setString(1, "%" + ((kwd == null) ? "" : kwd) + "%");
+			pstmt.setString(2, "%" + ((kwd == null) ? "" : kwd) + "%");
+			pstmt.setInt(3, (pagination.getCurrentPage() - 1) * pagination.getListSize());
+			pstmt.setInt(4, pagination.getListSize());
+//			5. limit 수정
+//			ex ) limit (보여줄 페이지 - 1) * 한 페이지에 보여줄 게시글의 수, 한 페이지에 보여줄 게시글의 수
 			
 			rs = pstmt.executeQuery();
 			
@@ -391,9 +400,9 @@ public class BoardDao {
 		return result;
 	}
 	
-	// 게시글 글쓴이+제목 검색
-	public List<BoardVo> getAllList(String kwd) {
-		List<BoardVo> result = new ArrayList<BoardVo>();
+	// 전체 게시글 수 구하기
+	public int getListCount(String kwd) {
+		int count = -1;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -401,31 +410,22 @@ public class BoardDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
+			String sql = "select count(*) as 'cnt'" +
 			        "       from user u, board b" +
 					"      where u.no = b.user_no" +
-			        "        and (u.name like ?" +
-					"         or b.title like ?)" +
+			        "        and (b.title like ? or b.contents like ?)" +
 			        "   order by g_no desc, o_no asc";
 			pstmt = connection.prepareStatement(sql);
-			pstmt.setString(1, "%"+kwd+"%");
-			pstmt.setString(2, "%"+kwd+"%");
+			pstmt.setString(1, "%" + ((kwd == null) ? "" : kwd) + "%");
+			pstmt.setString(2, "%" + ((kwd == null) ? "" : kwd) + "%");
+			
+//			5. limit 수정
+//			ex ) limit (보여줄 페이지 - 1) * 한 페이지에 보여줄 게시글의 수, 한 페이지에 보여줄 게시글의 수
 			
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
-				BoardVo boardVo = new BoardVo();
-				
-				boardVo.setNo(rs.getLong("no"));
-				boardVo.setTitle(rs.getString("title"));
-				boardVo.setuName(rs.getString("name"));
-				boardVo.setContents(rs.getString("contents"));
-				boardVo.setHit(rs.getInt("hit"));
-				boardVo.setRegDate(rs.getString("reg_date"));
-				boardVo.setDepth(rs.getInt("depth"));
-				boardVo.setStatus(rs.getString("status"));
-				
-				result.add(boardVo);
+			if (rs.next()) {
+				count = rs.getInt("cnt");
 			}
 						
 		} catch (SQLException e) {
@@ -445,119 +445,9 @@ public class BoardDao {
 				e.printStackTrace();
 			}
 		}
-		return result;
+		return count;
 	}
 	
-	// 게시글 제목 검색
-	public List<BoardVo> getTitleList(String kwd) {
-		List<BoardVo> result = new ArrayList<BoardVo>();
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			connection = getConnection();
-			
-			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
-			        "       from user u, board b" +
-					"      where u.no = b.user_no" +
-					"        and b.title like ?" +
-			        "   order by g_no desc, o_no asc";
-			pstmt = connection.prepareStatement(sql);
-			pstmt.setString(1, "%"+kwd+"%");
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				BoardVo boardVo = new BoardVo();
-				
-				boardVo.setNo(rs.getLong("no"));
-				boardVo.setTitle(rs.getString("title"));
-				boardVo.setuName(rs.getString("name"));
-				boardVo.setContents(rs.getString("contents"));
-				boardVo.setHit(rs.getInt("hit"));
-				boardVo.setRegDate(rs.getString("reg_date"));
-				boardVo.setDepth(rs.getInt("depth"));
-				boardVo.setStatus(rs.getString("status"));
-				
-				result.add(boardVo);
-			}
-						
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}
-		
-	// 게시글 글쓴이 검색
-	public List<BoardVo> getNameList(String kwd) {
-		List<BoardVo> result = new ArrayList<BoardVo>();
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			connection = getConnection();
-			
-			String sql = "select b.no as no, title, name, contents, hit, date_format(reg_date,'%Y-%m-%d %h:%i:%s') as reg_date, depth, status" +
-			        "       from user u, board b" +
-					"      where u.no = b.user_no" +
-					"        and u.name like ?" +
-			        "   order by g_no desc, o_no asc";
-			pstmt = connection.prepareStatement(sql);
-			pstmt.setString(1, "%"+kwd+"%");
-			
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				BoardVo boardVo = new BoardVo();
-				
-				boardVo.setNo(rs.getLong("no"));
-				boardVo.setTitle(rs.getString("title"));
-				boardVo.setuName(rs.getString("name"));
-				boardVo.setContents(rs.getString("contents"));
-				boardVo.setHit(rs.getInt("hit"));
-				boardVo.setRegDate(rs.getString("reg_date"));
-				boardVo.setDepth(rs.getInt("depth"));
-				boardVo.setStatus(rs.getString("status"));
-				
-				result.add(boardVo);
-			}
-						
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}
 	
 	// 게시글에 대한 g_no, o_no, depth 출력
 	public BoardVo select(Long no) {
@@ -605,6 +495,7 @@ public class BoardDao {
 		}
 		return result;
 	}
+	
 
 	private Connection getConnection() throws SQLException {
 		Connection connection = null;
@@ -618,5 +509,10 @@ public class BoardDao {
 		}
 		return connection;
 	}
+
+	
+	
+
+	
 
 }
