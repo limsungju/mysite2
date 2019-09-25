@@ -59,7 +59,7 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${pagination.prev }">
-							<li><a href="${pageContext.servletContext.contextPath }/board?keyword=${param.keyword }&page=${pagination.startPage - 1 }">◀</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board?kwd=${param.keyword }&page=${pagination.startPage - 1 }">◀</a></li>
 						</c:if>
 						<c:forEach begin="${pagination.startPage }" end="${pagination.endPage }" var="pg">
 							<c:choose>
@@ -67,13 +67,13 @@
 									<li class="selected">${pg }</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${pageContext.servletContext.contextPath }/board?keyword=${param.keyword }&page=${pg }" >${pg }</a></li>
+									<li><a href="${pageContext.servletContext.contextPath }/board?kwd=${param.keyword }&page=${pg }" >${pg }</a></li>
 								</c:otherwise>
 							</c:choose>
 							
 						</c:forEach>
 						<c:if test="${pagination.next }">
-							<li><a href="${pageContext.servletContext.contextPath }/board?keyword=${param.keyword }&page=${pagination.endPage + 1 }">▶</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board?kwd=${param.keyword }&page=${pagination.endPage + 1 }">▶</a></li>
 						</c:if>
 					</ul>
 				</div>
